@@ -9,7 +9,7 @@ function router(){
             (async function mongo(){
                 const listProduct = await Product.find();
                 
-                res.render('home', {title:'fucking world'});
+                res.render('pages/home', {title:'fucking world'});
             }())
         })
     return HomeRoutes

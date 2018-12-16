@@ -30,7 +30,10 @@ const HomeRouter = require('./src/routes/HomeRoutes')();
 //const CartRouter = require('./src/routes/CartRoutes')();
 
 
-
+app.use((req, res, next) => {
+  res.locals.login = true;
+  next();
+})
 app.use('/', HomeRouter);
 
 //app.get('/', (req, res) => res.send('Hello World!'))

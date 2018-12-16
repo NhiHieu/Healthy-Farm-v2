@@ -37,8 +37,8 @@ const UserSchema = new Schema({
         trim: true,
         maxlength: 50
     },
-    AccountId:{
-        type: Schema.Types.ObjectId, ref: 'Account'
+    Role:{
+        type: Schema.Types.ObjectId, ref: 'Role'
     }
 })
 

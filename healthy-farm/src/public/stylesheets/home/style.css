@@ -1,0 +1,53 @@
+.intro {
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+  background-position: center top;
+  padding: 120px 0px;
+  color: white;
+}
+
+.wrap-intro {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  position: absolute;
+  pointer-events: none;
+}
+
+.wrap-img {
+  width: 100%;
+}
+
+.wrap-img img {
+  width: 100%;
+  height: auto;
+  opacity: .2;
+}
+.overview-img {
+  text-align: center;
+  width: auto;
+  max-width: 100%;
+  position: relative;
+  display: inline-block;
+}
+
+.overview-img a img {
+  height: auto;
+  max-width: 100%;
+}
+
+.background-image {
+  background-image: url(https://healthyfarm.org/wp-content/uploads/2018/05/DSC_1325-1_Fotor-resized.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+  background-position: center center;
+  background-color: #f2f4f5;
+  width: 100%;
+  height: auto;
+}

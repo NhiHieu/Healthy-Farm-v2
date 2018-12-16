@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const ImageSchema = new Schema({
-    src:{
+    Src:{
         type: String,
         required: true
     },
-    alt:{
+    Alt:{
         type: String,
         required: true
     }

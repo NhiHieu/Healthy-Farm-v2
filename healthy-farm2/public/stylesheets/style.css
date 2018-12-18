@@ -1,3 +1,7 @@
+.main {
+  margin-top: 60px;
+}
+/* nav bar*/
 .logo {
   width: 200px;
   height: 40px;
@@ -6,7 +10,7 @@
   padding: 0px 20px !important;
 }
 .nav-link {
-  border-bottom: 5px solid transparent;
+  border-bottom: 6px solid transparent;
   padding: 15px 10px !important;
   transition: all .3s;
 }
@@ -14,10 +18,7 @@
   border-bottom-color: #3978b8;
   color: #3978b8 !important;
 }
-.main {
-  margin-top: 60px;
-}
-
+/*end navbar*/
 .footer {
   background: none;
   background-color: #2f8d6e;
@@ -25,6 +26,7 @@
   padding: 40px 100px 10px 200px;
   color: white;
 }
+
 
 .footer-header {
   padding-bottom: 20px;

@@ -19,6 +19,15 @@
   pointer-events: none;
 }
 
+.wrap-img {
+  width: 100%;
+}
+
+.wrap-img img {
+  width: 100%;
+  height: auto;
+  opacity: .2;
+}
 .overview-img {
   text-align: center;
   width: auto;
@@ -32,8 +41,8 @@
   max-width: 100%;
 }
 
-.background-intro {
-  background-image: url(https://healthyfarm.org/wp-content/uploads/2017/08/bw-farmer-vietnam-sustainable-clean-food.jpg);
+.background-image {
+  background-image: url(https://healthyfarm.org/wp-content/uploads/2018/05/DSC_1325-1_Fotor-resized.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: scroll;

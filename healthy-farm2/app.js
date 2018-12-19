@@ -14,7 +14,7 @@ const usersRouter = require('./routes/user.route');
 const productsRouter = require('./routes/product.route');
 
 const app = express();
-
+dotenv.config();
 require('./config/passport');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,7 +34,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 // dotenv config
-dotenv.config();
 
 // connect to database
 mongoose.connect(

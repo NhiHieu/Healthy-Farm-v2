@@ -2,10 +2,12 @@ const Product = require('../models/product.model');
 const Category = require('../models/category.model');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+const env = require('dotenv');
+env.config();
 
 // connect to database
 mongoose.connect(
-  "mongodb://localhost:27017/healthy-farm2",{
+  process.env.URI_LOCAL,{
     useNewUrlParser: true
   }
 ).then((result)=> {
@@ -22,7 +24,6 @@ Category
   .exec()
   .then((result)=>{
     categories = result;
-    console.log(categories);
     // add some products 
     const products = [];
     Product.deleteMany((err, result)=>{
@@ -102,19 +103,17 @@ Category
       }))
 
       // save to the database
-      let done = 0;
-      for (let i = 0; i < products.length; i++){
-        products[i].save((err, result)=>{
-          done++;
-          if (done === products.length){
-            mongoose.disconnect();
-          }
-        })
-      }
+      Product.insertMany(products, (err, result)=> {
+        if (err) {
+          console.log(err);
+        }
+        if (result) {
+          console.log('insert product to database successfully');
+        }
+        process.exit();
+      })
     })
   })
-  .catch((err)=>{
-    console.log(err);
-  })
+ 
 
 

@@ -11,6 +11,10 @@ const getProductChunk = (products, chunkSize) => {
   return result;
 }
 
+router.use((req, res, next)=> {
+  res.locals.currentPage = 'products';
+  next();
+})
 router.get('/', (req, res, next)=> {
   Product.find((err, products)=>{
     let productChunk = getProductChunk(products, 4);

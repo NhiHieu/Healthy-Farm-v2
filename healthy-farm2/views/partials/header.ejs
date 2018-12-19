@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="/">
     <img class='logo'src="https://healthyfarm.org/wp-content/uploads/2018/02/healthyfarm-logo-horizontal-web.svg" alt="Healthy Farm" title="Healthy Farm">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,16 +8,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="/products">Shop</a>
+      <li class="nav-item mr-1">
+        <a class="<%= currentPage==='products' ? 'nav-link active-nav-link' : 'nav-link' %>" href="/products">Shop</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item mr-1">
         <a class="nav-link" href="#">How it word</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item mr-1">
         <a class="nav-link" href="#">Event</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item mr-1">
         <a class="nav-link" href="#">Vendor</a>
       </li>
       <li class="nav-item">
@@ -36,16 +36,28 @@
           <span class="badge badge-pill badge-success"></span>
         </a>
       </li>
+      <% if (user) { %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%=user.username%>
+          </a>
+          <div class="dropdown-menu" style='width: auto; z-index: 10' aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/user/profile">Profile</a>
+            <a class="dropdown-item" href="/user/log-out">Log out</a>
+          </div>
+        </li>
+      <% }  else { %>
       <li class="nav-item mr-2">
-        <a class="nav-link" href="#">
-          Sign in
+        <a class="nav-link" href="/user/log-in">
+          Log in
         </a>
       </li>
       <li class="nav-item">
-        <a class='nav-link'href="#">
+        <a class='nav-link'href="/user/sign-up">
           Sign up
         </a>
       </li>
+      <% } %> 
     </ul>
 
   </div>

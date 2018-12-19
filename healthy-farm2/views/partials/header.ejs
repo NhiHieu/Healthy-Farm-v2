@@ -33,7 +33,7 @@
         <a class="nav-link" href="#">
           <i class="fa fa-shopping-cart"></i>
           Cart
-          <span class="badge badge-pill badge-success"></span>
+          <span class="badge badge-pill badge-success"><% if (session.cart) {%><%=session.cart.totalQuantity%><%}%></span>
         </a>
       </li>
       <% if (user) { %>

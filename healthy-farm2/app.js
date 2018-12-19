@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/user.route');
@@ -25,11 +26,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   secret: 'noscret',
   resave: false,
   saveUninitialized: true,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),// resuse mongoose connection
+  cookie: { maxAge: 180 * 60 * 1000 } // 180 minutes time life of cookie-session
 }))
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -50,8 +55,10 @@ mongoose.connect(
 app.use((req, res, next)=> {
   res.locals.user = req.user;
   res.locals.currentPage = '';
+  res.locals.session = req.session;
   next();
 })
+
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/products', productsRouter);

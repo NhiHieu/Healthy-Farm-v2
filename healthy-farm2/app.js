@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // config to use bootstrap
-app.use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist')))
+app.use('/mdbootstrap', express.static(path.join(__dirname, '/node_modules/mdbootstrap')))
 
 app.use(session({
   secret: 'nosecret',

@@ -19,5 +19,22 @@ router.get('/add-to-cart/:productId', (req, res, next) => {
   })
 })
 
+router.get('/shopping-cart', (req, res, next) => {
+  if (!req.session.cart) {
+    res.render('products/shopping-cart', { products: null})
+  } else {
+    let cart = new Cart(req.session.cart);
+    res.render('product/shopping-cart', { 
+      products: cart.toArray(),  
+      totalPrice: cart.totalPrice
+    });
+  }
+})
 
+router.get('/checkout', (req, res, next)=> {
+  if (!req.session.cart) {
+    res.redirect('/shopping-cart')
+  }
+  res.render('product/checkout');
+})
 module.exports = router;

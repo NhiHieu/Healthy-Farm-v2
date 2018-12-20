@@ -15,6 +15,8 @@ const usersRouter = require('./routes/user.route');
 const productsRouter = require('./routes/product.route');
 
 const app = express();
+
+// dotenv config
 dotenv.config();
 require('./config/passport');
 // view engine setup
@@ -26,9 +28,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// config to use bootstrap
+app.use('/mdbootstrap', express.static(path.join(__dirname, '/node_modules/mdbootstrap')))
 
 app.use(session({
-  secret: 'noscret',
+  secret: 'nosecret',
   resave: false,
   saveUninitialized: true,
   store: new MongoStore({ mongooseConnection: mongoose.connection }),// resuse mongoose connection
@@ -38,7 +42,6 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-// dotenv config
 
 // connect to database
 mongoose.connect(

@@ -12,6 +12,17 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  addressDelivery: [{
+    name: String,
+    address: {
+      type: String,
+      maxlength: 200
+    },
+    phoneNumber: {
+      type: Number,
+      maxlength: 12
+    }
+  }],
   firstName:{
     type: String,
   },

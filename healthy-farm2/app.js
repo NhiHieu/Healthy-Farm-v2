@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// config to use bootstrap
+// config to use mdbootstrap
 app.use('/mdbootstrap', express.static(path.join(__dirname, '/node_modules/mdbootstrap')))
 
 app.use(session({

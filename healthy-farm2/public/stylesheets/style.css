@@ -1,11 +1,16 @@
+body {
+  font-family: Helvetica, Arial, sans-serif !important ;
+}
 .main {
   margin-top: 57px;
 }
 /* nav bar*/
+
 .logo {
   width: 200px;
   height: 40px;
 }
+
 .navbar {
   padding: 0px 20px !important;
 }
@@ -15,8 +20,8 @@
   transition: all .3s;
 }
 .nav-link:hover, .active-nav-link {
-  border-bottom-color: #3978b8;
-  color: #3978b8 !important;
+  border-bottom-color: #4285f4!important;;
+  color: #4285f4!important;;
 }
 .active-nav-link {
   font-weight: bold;

@@ -9,44 +9,45 @@
   <% include ../partials/header %>
 </header>
 <main class="main">
-  <h1 class='text-center'>Sign up</h1>
+  <h1 class='text-center'>check out</h1>
+  <h3 class='text-center'> total price: <%=session.cart.totalPrice%></h3>
 
   <div class='row d-flex justify-content-center'>
-      <form method="POST" class='needs-validation' novalidate>
-        <div class='form-row'>
-          <div class="form-group col-md-12">
-            <label for="username">name</label>
-            <input required type="text" name='username' class="form-control" id="username" placeholder="name">
-            <div class="valid-feedback">
-              Very awesome!!!
-            </div>
-            <div class="invalid-feedback">
-              Please provide name.
-            </div>
+    <form method="POST" class='needs-validation' novalidate>
+      <div class='form-row'>
+        <div class="form-group col-md-12">
+          <label for="name">name</label>
+          <input type="text" name='name' class="form-control" id="name" placeholder="name">
+          <div class="valid-feedback">
+            Very awesome!!!
           </div>
-          <div class="form-group col-md-12">
-            <label for="email">address</label>
-            <input required type="email" name='email' class="form-control" id="email" placeholder="address">
-            <div class="valid-feedback">
-              Very awesome!!!
-            </div>
-            <div class="invalid-feedback">
-              Please provide address.
-            </div>
-          </div>
-          <div class="form-group col-md-12">
-            <label for="password">phone number</label>
-            <input required type="password" name='password' class="form-control" id="phone number">
-            <div class="valid-feedback">
-              Very awesome!!!
-            </div>
-            <div class="invalid-feedback">
-              Please provide phone.
-            </div>
+          <div class="invalid-feedback">
+            Please provide name.
           </div>
         </div>
-          <button type="submit" class="btn btn-primary">Sign up</button>
-        </form>
+        <div class="form-group col-md-12">
+          <label for="address">address</label>
+          <input type="text" name='address' class="form-control" id="address" placeholder="address">
+          <div class="valid-feedback">
+            Very awesome!!!
+          </div>
+          <div class="invalid-feedback">
+            Please provide address.
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <label for="phone-number">phone number</label>
+          <input type="phone-number" name='phoneNumber' class="form-control" id="phone-number">
+          <div class="valid-feedback">
+            Very awesome!!!
+          </div>
+          <div class="invalid-feedback">
+            Please provide phone.
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Check out</button>
+    </form>
   </div>
       
 </main>
@@ -55,6 +56,6 @@
   <% include ../partials/footer %>
 </footer>
 <% include ../partials/scripts %>
-<script src='/javascripts/validateForm.js'></script>>
+<script src='/javascripts/validateForm.js'></script>
 </body>
 </html>

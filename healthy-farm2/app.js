@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const csrf = require('csurf');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -23,6 +24,7 @@ require('./config/passport');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// use csrf to prevent csurf
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +44,7 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(csrf());
 
 // connect to database
 mongoose.connect(
@@ -59,6 +62,7 @@ app.use((req, res, next)=> {
   res.locals.user = req.user;
   res.locals.currentPage = '';
   res.locals.session = req.session;
+  res.locals._csrf = req.csrfToken();
   next();
 })
 

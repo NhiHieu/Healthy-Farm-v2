@@ -5,7 +5,7 @@ const Cart = require('../models/cart.model');
 const Order = require('../models/order.model');
 
 // home page 
-router.get('/', (req, res, next)=> {
+router.get('/', getOldUrl, (req, res, next)=> {
   let successMsg = req.flash('successMsg')[0];
   console.log('message from flash', successMsg);
   res.render('pages/home', {
@@ -21,7 +21,8 @@ router.get('/add-to-cart/:productId', (req, res, next) => {
     cart.add(product, product.id);
     req.session.cart = cart;
     console.log(req.session.cart);
-    res.redirect('/products');
+    const oldUrl = req.session.oldUrl;
+    res.redirect('/products' + oldUrl);
   })
 })
 
@@ -89,5 +90,10 @@ function isLoggedIn(req, res, next) {
   }
   req.session.oldUrl = req.url;
   res.redirect('/user/log-in');
+}
+
+function getOldUrl(req, res, next) {
+  req.session.oldUrl = req.url;
+  next();
 }
 module.exports = router;

@@ -13,6 +13,7 @@
 <main class="main">
   <div class='row d-flex justify-content-center'>
     <div class='col-md-4 col-md-offset-3'>
+  
         <h1>Sign in</h1>
         <%if (hasError) {%>
           <div class='alert alert-danger'>
@@ -31,12 +32,13 @@
             <label for="exampleInputPassword1">Password</label>
             <input name='password' type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
           </div>
-          <input type='hidden' name='_csrf' value="<%=csrf%>"/>
+          <input type='hidden' name='_csrf' value="<%=_csrf%>"/>
           <button type="submit" class="btn btn-primary">Log in</button>
         </form>
     </div>
   </div>
   <button class='btn btn-success' id='linkButton'>ClickMe</button>
+  
 </main>
 
 <footer>

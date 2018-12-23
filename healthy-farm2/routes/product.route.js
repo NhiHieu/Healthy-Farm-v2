@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/product.model');
 const Category = require('../models/category.model');
+const middleware = require('../middleware');
 
 const getProductChunk = (products, chunkSize) => {
   let result = [];
@@ -15,7 +16,7 @@ router.use((req, res, next)=> {
   res.locals.currentPage = 'products';
   next();
 })
-router.get('/', (req, res, next)=> {
+router.get('/', middleware.getOldUrl, (req, res, next)=> {
   Product.find((err, products)=>{
     let productChunk = getProductChunk(products, 4);
     Category.find((err, result)=> {
@@ -28,7 +29,7 @@ router.get('/', (req, res, next)=> {
   })
 })
 
-router.get('/categories/:cateId', (req, res, next)=> {
+router.get('/categories/:cateId', middleware.getOldUrl, (req, res, next)=> {
   const cateId = req.params.cateId;
   Product.find({ category: cateId }, (err, products)=> {
     let productChunk = getProductChunk(products, 4);

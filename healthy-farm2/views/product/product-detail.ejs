@@ -20,7 +20,7 @@
           <h6 class="card-subtitle mb-2 text-muted"><%=product.price%></h6>
           <p class='card-text'><%=product.description%> some Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
-        <a href='#' class='btn btn-success mt-auto'>Add to cart</a>
+        <a href='/add-to-cart/<%=product.id%>' class='btn btn-success mt-auto'>Add to cart</a>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
                     <h5 class="card-title"><%=listProduct[j].name%></h5>
                     <p class="card-text"><%=listProduct[j].description%></p>
                     <p class="card-text"><%=listProduct[j].price%></p>
-                    <a href="#" class="btn btn-success">Add to cart</a>
+                    <a href="/add-to-cart/<%=listProduct[j].id%>" class="btn btn-success">Add to cart</a>
                   </div>
                 </div>    
               </a>

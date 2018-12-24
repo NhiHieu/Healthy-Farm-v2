@@ -3,9 +3,11 @@ var router = express.Router();
 const Product = require('../models/product.model');
 const Cart = require('../models/cart.model');
 const Order = require('../models/order.model');
+const User = require('../models/user.model');
+const passport = require('passport');
 
 // home page 
-router.get('/', getOldUrl, (req, res, next)=> {
+router.get('/', (req, res, next)=> {
   let successMsg = req.flash('successMsg')[0];
   console.log('message from flash', successMsg);
   res.render('pages/home', {
@@ -22,6 +24,7 @@ router.get('/add-to-cart/:productId', (req, res, next) => {
     req.session.cart = cart;
     console.log(req.session.cart);
     const oldUrl = req.session.oldUrl;
+    console.log(req.url);
     res.redirect('/products' + oldUrl);
   })
 })
@@ -84,6 +87,48 @@ router.post('/checkout', isLoggedIn, (req, res, next)=> {
   
 })
 
+router.get('/test', (req, res, next)=> {
+  let message = req.flash();
+  console.log('get router test', message);
+  res.render('test');
+})
+router.get('/test2', (req, res, next)=> {
+  res.render('test2');
+})
+router.post('/test/api/login', (req, res, next)=> {
+  passport.authenticate('local.login', (err, user, info)=>{
+    console.log(user, err, info);
+    if (err) { return next(err); }
+    if(!user) {
+      console.log('info', info);
+      return res.json({
+        hasError: true,
+        message: info.message})
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.json({ message: 'sucessfully'})
+    });
+  })(req, res, next)
+})
+
+router.post('/test/api/signup', (req, res, next)=> {
+  passport.authenticate('local.signup', (err, user, info)=>{
+    console.log(user, err, info);
+    if (err) { return next(err); }
+    if(!user) {
+      console.log('info', info);
+      return res.json({
+        hasError: true,
+        message: info.message})
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.json({ message: 'sucessfully'})
+    });
+  })(req, res, next)
+})
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -92,8 +137,6 @@ function isLoggedIn(req, res, next) {
   res.redirect('/user/log-in');
 }
 
-function getOldUrl(req, res, next) {
-  req.session.oldUrl = req.url;
-  next();
-}
+
+
 module.exports = router;

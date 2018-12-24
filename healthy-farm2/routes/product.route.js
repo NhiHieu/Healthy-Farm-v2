@@ -54,7 +54,7 @@ router.get('/categories/:cateId', middleware.getOldUrl, (req, res, next)=> {
   })
 })
 
-router.get('/product-detail/:productId', (req, res, next) => {
+router.get('/product-detail/:productId', middleware.getOldUrl, (req, res, next) => {
   const productId = req.params.productId;
   Product.findById(productId, (err, product)=> {
     Product.find({ category: product.category }, (error, listProduct)=> {

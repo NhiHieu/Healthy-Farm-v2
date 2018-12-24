@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/head %>
+</head>
+<body>
+
+<header>
+</header>
+<main class="main">
+  <div class="modal fade" id="modalLoginForm1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+            <form id='loginForm1' class="needs-validation" novalidate>
+              <div class="mb-4 md-form">
+                <i class="fa fa-envelope prefix grey-text"></i>
+                <label for="loginEmail1">Your email</label>
+                <input type="email" class="form-control" id="loginEmail1" required>
+                <div class='ml-5 valid-feedback'>
+                  awesome
+                </div>
+                <div class="ml-5 invalid-feedback">
+                  Please provide a valid email.
+                </div>
+              </div>
+              <div class="mb-5 md-form">
+                <i class="fa fa-lock prefix grey-text"></i>
+                <label for="loginPassword1">State</label>
+                <input type="password" class="form-control" id="loginPassword1" required>
+                <div class='ml-5 valid-feedback'>
+                  awesome
+                </div>
+                <div class="ml-5 invalid-feedback">
+                  Please provide password.
+                </div>
+              </div>
+              <input id='_csrf1' type="hidden" name='_csrf' value='<%=_csrf%>'/>
+              <div class="modal-footer d-flex justify-content-center">
+                <button id='loginButton'class="btn btn-default">Login</button>
+              </div>
+            </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center">
+    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm1">Launch
+      Modal Login Form</a>
+  </div>
+
+</main>
+
+<footer>
+  <% include ./partials/footer %>
+</footer>
+<% include ./partials/scripts %>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+checkValidate = false;
+function validateForm() {
+  $('#loginButton').click((event)=> {
+    let check = true;
+    var forms = document.getElementsByClassName('needs-validation');
+    for (let i = 0; i < forms.length; i++) {
+      if (forms[i].checkValidity() === false) {
+        check = false;
+        break;
+      }
+    }
+    if (!check) {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            check = false;
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }
+    checkValidate = check;
+    console.log(checkValidate);
+  })
+
+};
+validateForm();
+
+  $(document).ready(function(){
+    $('#loginForm1').submit(function(event){
+      event.preventDefault();
+      validateForm();
+      if (checkValidate) {
+        ajaxPost();
+      }
+    })
+  })
+
+  function ajaxPost() {
+    //prepare formData
+    const formData = {
+      _csrf: $('#_csrf1').val(),
+      email: $('#loginEmail1').val(),
+      password: $('#loginPassword1').val()
+    }
+    console.log(formData);
+    // do post
+    $.ajax({
+      type: 'POST',
+      contentType : "application/json",
+      url : "/test/api/login",
+      data : JSON.stringify(formData),
+      dataType: 'json',
+      success: function(data) {
+        console.log('success', data);
+        $('#modalLoginForm1').modal('toggle'); 
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": false,
+          "positionClass": "toast-bottom-left",
+          "preventDuplicates": true,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "2000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }       
+        if (data.hasError) {
+          toastr.error(data.message, 'Error');
+        } else {
+          toastr.options.onHidden = function() { 
+            location.reload();
+          }
+          toastr.success(data.message, "login success");
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert('error', textStatus);
+        console.log(err);
+      }
+      // reset form data
+    })
+    resetData();
+  }
+  function resetData() {
+    $('#loginEmail1').val('');
+    $('#loginPassword1').val('');
+  }
+</script>
+</body>
+</html>

@@ -63,6 +63,8 @@ app.use((req, res, next)=> {
   res.locals.currentPage = '';
   res.locals.session = req.session;
   res.locals._csrf = req.csrfToken();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
 

@@ -27,8 +27,6 @@ passport.use('local.signup', new LocalStrategy({
       return done(null, false, { message: 'Email is already taken' })
     }
     const newUser = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
       username: req.body.username
     })
     newUser.email = email;
@@ -48,15 +46,17 @@ passport.use('local.login', new LocalStrategy({
   passReqToCallback: true
 }, (req, email, password, done)=> {
   User.findOne({ 'email': email }, (err, user)=> {
+    console.log('passport login');
     if (err) {
       return done(err);
     }
     if(!user) {
-      return done(null, false, { message: 'User\'s not found'})
+      return done(null, false, {message: 'user\' not found'})
     }
     if (user) {
       if (!user.validPassword(password)){
-        return done(null, false, { message: 'Wrong password'})
+        console.log('wrong pass');
+        return done(null, false, {message: 'wrong password'})
       }
     }
     return done(null, user);

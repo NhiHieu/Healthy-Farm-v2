@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www -e ejs,js,css"
+    "start": "nodemon --inspect ./bin/www -e ejs,js,css"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

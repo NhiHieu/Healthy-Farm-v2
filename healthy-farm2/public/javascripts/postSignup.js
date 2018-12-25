@@ -40,7 +40,7 @@ $(document).ready(function(){
           toastr.options.onHidden = function() { 
             location.reload();
           }
-          toastr.success("Sign up successfully", 'Success');
+          toastr.success('Success', "Sign up successfully");
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -52,10 +52,10 @@ $(document).ready(function(){
       resetData();
     }
     function resetData() {
-      username.val('');
-      email.val('');
-      password.val('');
-      confirmPassword.val('');
+      username.val(null);
+      email.val(null);
+      password.val(null);
+      confirmPassword.val(null);
       username.removeClass(`${validClass} ${invalidClass}`);
       email.removeClass(`${validClass} ${invalidClass}`);
       password.removeClass(`${validClass} ${invalidClass}`);

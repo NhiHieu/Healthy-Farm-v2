@@ -39,7 +39,7 @@
     
     <div class="row">
       <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset3">
-        <a class='btn btn-success' href='/checkout'>Checkout</a>
+        <a class='btn btn-success' id='checkout-link' href='/checkout'>Checkout</a>
       </div>
     </div>
     <% } else { %> 
@@ -56,6 +56,17 @@
   <% include ../partials/footer %>
 </footer>
 <% include ../partials/scripts %>
-
+<script>
+  $(document).ready(function(){
+    let user = '<%-JSON.stringify(user)%>';
+    $('#checkout-link').click((event)=> {
+      if (!user) {
+        event.preventDefault();
+        toastr.warning("You must log in before checkout", "Warning")
+      }
+    })
+  })
+  
+</script>
 </body>
 </html>

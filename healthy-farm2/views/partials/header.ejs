@@ -64,25 +64,26 @@
   </div>
 </nav>
 <!--modal from login-->
-  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-notify modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Log in</h4>
+        <h4 class="modal-title white-text w-100 font-weight-bold py-2">Create an account</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" class="white-text">&times;</span>
         </button>
-      </div>
-      <div class="modal-body mx-3">
-        <form id='loginForm' action='/api/log-in' method="POST">
-          <div class="md-form mb-5">
+      </div>       
+      
+      <form id='loginForm' action='/api/log-in' method="POST">
+        <div class="modal-body mx-3">
+          <div class="md-form form-sm mb-5">
             <i class="fa fa-envelope prefix grey-text"></i>
             <input type="email" id="loginEmail" class="form-control validate">
             <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
           </div>
 
-          <div class="md-form mb-4">
+          <div class="md-form form-sm mb-4">
             <i class="fa fa-lock prefix grey-text"></i>
             <input type="password" id="loginPassword" class="form-control validate">
             <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
@@ -90,10 +91,13 @@
 
         </div>
         <input type='hidden' id='_csrf' name='_csrf' value="<%=_csrf%>"/>
-        <div class="modal-footer d-flex justify-content-center">
+        <div class="d-flex justify-content-center mb-2">
           <button type='submit'class="btn btn-success">Login</button>
         </div>
       </form>
+      <div class="modal-footer d-flex justify-content-center">
+        <p>Not a member? <a href="" id='signup-link' class="blue-text">Sign Up</a></p>
+      </div>
     </div>
   </div>
 </div>
@@ -102,17 +106,17 @@
 <!--modal form sign up-->
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-notify modal-warning pt-0" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Create an Account</h4>
+        <h4 class="modal-title white-text w-100 font-weight-bold py-2">Create an account</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" class="white-text">&times;</span>
         </button>
       </div>
       <form method="POST" id='signup-form' novalidate>
-        <div class="modal-body mx-3">
-          <div class="md-form mb-5">
+        <div class="modal-body mx-3 pt-0">
+          <div class="md-form form-sm mb-4">
             <i class="fa fa-user prefix grey-text"></i>
             <input type="text" id="signup-username" class="form-control">
             <label data-error="" data-success="" for="signup-username">Your username</label>
@@ -123,7 +127,7 @@
               Please provide your username
             </div>
           </div>
-          <div class="md-form mb-5">
+          <div class="md-form form-sm mb-4">
             <i class="fa fa-envelope prefix grey-text"></i>
             <input type="email" id="signup-email" class="form-control">
             <label data-error="" data-success="" for="signup-email">Your email</label>
@@ -135,7 +139,7 @@
             </div>
           </div>
   
-          <div class="md-form mb-5">
+          <div class="md-form form-sm mb-4">
             <i class="fa fa-lock prefix grey-text"></i>
             <input type="password" id="signup-password" class="form-control">
             <label data-error="" data-success="" for="signup-password">Your password</label>
@@ -147,7 +151,7 @@
             </div>
           </div>
   
-          <div class="md-form mb-4">
+          <div class="md-form form-sm mb-3">
             <i class="fa fa-unlock-alt prefix grey-text"></i>
             <input type="password"name id="confirm-password" class="form-control">
             <label data-error='' data-success=""id='label-confirm' for="confirm-password">Confirm your password</label>
@@ -161,8 +165,13 @@
   
         </div>
         <input type='hidden' id='_csrf1' name='_csrf' value="<%=_csrf%>"/>
+        <div class=" d-flex justify-content-center mb-2">
+          <button type='submit' id='signup-button' class="btn btn-warning">Sign up</button>
+        </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button type='submit' id='signup-button' class="btn btn-deep-orange">Sign up</button>
+          <div class="options text-right">
+            <p class="pt-1">Already have an account? <a href="" id='login-link' class="blue-text">Log In</a></p>
+          </div>
         </div>
       </form>     
 

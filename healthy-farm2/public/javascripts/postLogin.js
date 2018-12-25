@@ -1,4 +1,10 @@
 $(document).ready(function(){
+  $('#signup-link, #login-link').click((event)=> {
+    event.preventDefault();
+    $('#modalLoginForm').modal('toggle');
+    $('#modalRegisterForm').modal('toggle');
+  })
+
   $('#loginForm').submit(function(event){
     event.preventDefault();
     ajaxPost();

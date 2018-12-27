@@ -26,6 +26,18 @@ body {
 .active-nav-link {
   font-weight: bold;
 }
+/* message validate form */
+.message  {
+  position: absolute;
+  top: 40px;
+  margin-left: 32px;
+
+}
+/* message validate form */
+/* override toast */
+#toast-container > div {
+  opacity: 1 !important;
+}
 /*end navbar*/
 .footer {
   background: none;

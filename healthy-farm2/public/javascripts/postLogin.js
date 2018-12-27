@@ -1,3 +1,7 @@
+let validateLogin = false;
+let loginEmail = $('#login-email'),
+    loginPassword = $('#login-password');
+
 $(document).ready(function(){
   $('#signup-link, #login-link').click((event)=> {
     event.preventDefault();
@@ -5,40 +9,66 @@ $(document).ready(function(){
     $('#modalRegisterForm').modal('toggle');
   })
 
-  $('#loginForm').submit(function(event){
+  validateFormLogin();
+
+  $('#loginForm').submit(function(event){    
     event.preventDefault();
-    ajaxPost();
+    if (validateLogin) {
+      ajaxPost();
+    }
   })
 })
-toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": true,
-  "progressBar": false,
-  "positionClass": "toast-bottom-left",
-  "preventDuplicates": true,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "2000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}    
+
+function validateFormLogin() {
+  let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+
+  $('#login-button').click(()=> {
+    validateLogin = true;
+    if (loginEmail.val()==='' || !emailReg.test(loginEmail.val())) {
+      validateLogin = false;
+      loginEmail.addClass(invalidClass).removeClass(validClass);
+    }  
+
+    if (loginPassword.val().length<8) {
+      validateLogin = false;
+      loginPassword.addClass(invalidClass).removeClass(validClass);
+    } else {
+      loginPassword.addClass(validClass).removeClass(invalidClass);
+    }
+  })
+
+  // validate email 
+  loginEmail.on('input', (e)=> {
+    // validate email
+    if (loginEmail.val() ==='' || !emailReg.test(loginEmail.val())) {
+      loginEmail.addClass(invalidClass).removeClass(validClass);
+    } else {
+      loginEmail.addClass(validClass).removeClass(invalidClass);
+    }
+  })
+
+  // validate password
+  loginPassword.on('input', (e)=> {
+    if (loginPassword.val().length<8) {
+      loginPassword.addClass(invalidClass).removeClass(validClass);
+    } else {
+      loginPassword.addClass(validClass).removeClass(invalidClass);
+    }
+  })
+}
+   
 function ajaxPost() {
   //prepare formData
   const formData = {
     _csrf: $('#_csrf').val(),
-    email: $('#loginEmail').val(),
-    password: $('#loginPassword').val()
+    email: loginEmail.val(),
+    password: loginPassword.val()
   }
   // do post
   $.ajax({
     type: 'POST',
     contentType : "application/json",
-    url : "/test/api/login",
+    url : "/user/api/login",
     data : JSON.stringify(formData),
     dataType: 'json',
     success: function(data) {
@@ -62,6 +92,9 @@ function ajaxPost() {
   resetData();
 }
 function resetData() {
-  $('#loginEmail').val('');
-  $('#loginPassword').val('');
+  loginEmail.val('');
+  loginPassword.val('');
+  loginEmail.removeClass(`${validClass} ${invalidClass}`);
+  loginPassword.removeClass(`${validClass} ${invalidClass}`);
+  $(".label-input").removeClass("active");
 }

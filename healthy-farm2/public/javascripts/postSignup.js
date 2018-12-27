@@ -1,4 +1,4 @@
-let validate = false;
+let validateSignup = false;
 let username = $('#signup-username'),
     email = $('#signup-email'),
     password = $('#signup-password');
@@ -7,11 +7,11 @@ let validClass = 'is-valid valid',
     invalidClass = 'is-invalid invalid';
     
 $(document).ready(function(){
-  validateForm();
+  validateFormSignup();
 
   $('#signup-form').submit(function(event){
     event.preventDefault();
-    if (validate) {
+    if (validateSignup) {
       postSignupAjax();
     }
   })  
@@ -28,7 +28,7 @@ $(document).ready(function(){
     $.ajax({
       type: 'POST',
       contentType : "application/json",
-      url : "/test/api/signup",
+      url : "/user/api/signup",
       data : JSON.stringify(formData),
       dataType: 'json',
       success: function(data) {
@@ -60,35 +60,36 @@ $(document).ready(function(){
       email.removeClass(`${validClass} ${invalidClass}`);
       password.removeClass(`${validClass} ${invalidClass}`);
       confirmPassword.removeClass(`${validClass} ${invalidClass}`);
+      $(".label-input").removeClass("active");
     }
 
 })
 
-function validateForm() {
+function validateFormSignup() {
   let emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 
   $('#signup-button').click((event)=> {
-    validate = true;
+    validateSignup = true;
     if (username.val()==='') {
-      validate = false;
+      validateSignup = false;
       username.addClass(invalidClass).removeClass(validClass);
     }
 
     if (email.val()==='' || !emailReg.test(email.val())) {
-      validate = false;
+      validateSignup = false;
       email.addClass(invalidClass).removeClass(validClass);
     }
 
     if (password.val().length<8) {
-      validate = false;
+      validateSignup = false;
       password.addClass(invalidClass).removeClass(validClass);
     }
 
     if (confirmPassword.val()!==password.val()) {
-      validate = false;
+      validateSignup = false;
       confirmPassword.addClass(invalidClass).removeClass(validClass);
     }
-    console.log(validate)
+    console.log(validateSignup)
   })
 
   // validate username

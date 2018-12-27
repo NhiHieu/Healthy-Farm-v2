@@ -95,39 +95,7 @@ router.get('/test', (req, res, next)=> {
 router.get('/test2', (req, res, next)=> {
   res.render('test2');
 })
-router.post('/test/api/login', (req, res, next)=> {
-  passport.authenticate('local.login', (err, user, info)=>{
-    console.log(user, err, info);
-    if (err) { return next(err); }
-    if(!user) {
-      console.log('info', info);
-      return res.json({
-        hasError: true,
-        message: info.message})
-    }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.json({ message: 'sucessfully'})
-    });
-  })(req, res, next)
-})
 
-router.post('/test/api/signup', (req, res, next)=> {
-  passport.authenticate('local.signup', (err, user, info)=>{
-    console.log(user, err, info);
-    if (err) { return next(err); }
-    if(!user) {
-      console.log('info', info);
-      return res.json({
-        hasError: true,
-        message: info.message})
-    }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.json({ message: 'sucessfully'})
-    });
-  })(req, res, next)
-})
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

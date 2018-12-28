@@ -3,6 +3,7 @@ const Cart = require('../models/cart.model');
 const passport = require('passport');
 
 const logout = (req, res, next)=> {
+  req.session.cart = null;
   req.logout();
   res.redirect('/');
 }
@@ -34,7 +35,9 @@ const checkNotLoggedIn = (req, res, next)=> {
 const apiLogin = (req, res, next)=> {
   passport.authenticate('local.login', (err, user, info)=>{
     console.log(user, err, info);
-    if (err) { return next(err); }
+    if (err) { 
+      return next(err); 
+    }
     if(!user) {
       console.log('info', info);
       return res.json({
@@ -42,7 +45,11 @@ const apiLogin = (req, res, next)=> {
         message: info.message})
     }
     req.logIn(user, function(err) {
-      if (err) { return next(err); }
+      if (err) { 
+        return next(err); 
+      }
+      console.log(req.user.id);
+      // in case cart user is null
       return res.json({ message: 'sucessfully'})
     });
   })(req, res, next)

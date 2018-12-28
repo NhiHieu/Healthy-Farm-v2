@@ -41,6 +41,42 @@ function Cart(oldCart) {
     }
     return arr;
   }
+
+  this.concat = function(anotherCart) {
+    if (anotherCart) {
+      // 
+      this.totalQuantity += anotherCart.totalQuantity;
+      this.totalPrice += anotherCart.totalPrice;
+
+      // find product in list items1 has same product in items
+      for (const key in this.items) {
+        if (anotherCart.items[key]) {
+          this.items[key].quantity += anotherCart.items[key].quantity;
+          this.items[key].price += anotherCart.items[key].price
+        }
+      }
+
+      // find product in anotherCart.items but not exist in this.items
+      for (const key in anotherCart.items) {
+        if (!this.items[key]) {
+          this.items[key] = anotherCart.items[key];
+        }
+      }
+
+    }
+  }
+
 }
+
+// our cart has folowing form: 
+/*
+cart{
+  items:
+   { '5c19f94c411d9a6758150032': { item: [Object], quantity: 2, price: 30000 },
+     '5c19f94c411d9a6758150031': { item: [Object], quantity: 1, price: 15000 } },
+    totalQuantity: 3,
+    totalPrice: 45000,
+}
+*/
 
 module.exports = Cart;

@@ -3,8 +3,15 @@ var router = express.Router();
 const Product = require('../models/product.model');
 const Cart = require('../models/cart.model');
 const Order = require('../models/order.model');
+const CartUser = require('../models/cartUser.model');
 const User = require('../models/user.model');
 const passport = require('passport');
+const { 
+  addToCart, 
+  reduceCart,
+  removeFromCart,
+  updateCartUser,
+} = require('../controllers/cart.controller');
 
 // home page 
 router.get('/', (req, res, next)=> {
@@ -16,36 +23,12 @@ router.get('/', (req, res, next)=> {
   });
 })
 
-router.get('/add-to-cart/:productId', (req, res, next) => {
-  let productId = req.params.productId;
-  let cart = new Cart(req.session.cart ? req.session.cart : {});
-  Product.findById(productId, (err, product)=> {
-    cart.add(product, product.id);
-    req.session.cart = cart;
-    console.log(req.session.cart);
-    const oldUrl = req.session.oldUrl;
-    console.log(req.url);
-    res.redirect('/products' + oldUrl);
-  })
-})
+router.get('/add-to-cart/:productId', addToCart, updateCartUser);
 
-router.get('/reduce-to-cart/:productId', (req, res, next)=> {
-  let productId = req.params.productId;
-  let cart = new Cart(req.session.cart ? req.session.cart : {});
-  cart.reduce(productId);
-  req.session.cart = cart;
-  console.log(req.session.cart);
-  res.redirect('/shopping-cart');
+router.get('/reduce-cart/:productId', reduceCart, updateCartUser);
 
-})
+router.get('/remove-from-cart/:productId', removeFromCart, updateCartUser);
 
-router.get('/remove-to-cart/:productId', (req, res, next)=> {
-  let productId = req.params.productId;
-  let cart = new Cart(req.session.cart ? req.session.cart : {});
-  cart.remove(productId);
-  req.session.cart = cart;
-  res.redirect('/shopping-cart');
-})
 
 router.get('/shopping-cart', (req, res, next) => {
   if (!req.session.cart) {
@@ -82,7 +65,18 @@ router.post('/checkout', isLoggedIn, (req, res, next)=> {
     console.log(req.body);
     req.flash('successMsg', 'buy products successfully');
     req.session.cart = null;
-    res.redirect('/');
+    CartUser.findOne({ user: req.user }, (err, cartUser)=>{
+      console.log(cartUser);
+      cartUser.cart = null;
+      console.log('buy success', cartUser.cart);
+      cartUser.save((err, result)=>{
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+        res.redirect('/');
+      })
+    })
   })
   
 })
@@ -104,7 +98,6 @@ function isLoggedIn(req, res, next) {
   req.session.oldUrl = req.url;
   res.redirect('/user/log-in');
 }
-
 
 
 module.exports = router;

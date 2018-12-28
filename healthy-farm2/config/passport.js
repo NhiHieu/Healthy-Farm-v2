@@ -1,6 +1,8 @@
 const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const User = require('../models/user.model');
+const Cart = require('../models/cart.model');
+const CartUser = require('../models/cartUser.model');
 
 passport.serializeUser((user, done)=> {
   done(null, user.id);
@@ -35,7 +37,14 @@ passport.use('local.signup', new LocalStrategy({
       if (err) {
         return done(err);
       }
-      return done(null, newUser)
+      let cart = new Cart(req.session.cart ? req.session.cart : {} );
+      let newCartUser = new CartUser({
+        user: user.id,
+        cart: cart
+      })
+      newCartUser.save((err, result)=>{
+        return done(null, newUser)
+      })
     })
   })
 }))
@@ -59,6 +68,18 @@ passport.use('local.login', new LocalStrategy({
         return done(null, false, {message: 'wrong password'})
       }
     }
-    return done(null, user);
+    let cart = new Cart(req.session.cart ? req.session.cart : {} );
+    CartUser.findOne({ user: user}, (err, cartUser)=> {
+      cart.concat(cartUser.cart);
+      req.session.cart = cartUser.cart = cart;
+      cartUser.save((err, result)=> {
+        if (err) {
+          console.log(err);
+        }
+        console.log('updated and save in database');
+        return done(null, user);
+      })
+    })    
+    
   })
 }))

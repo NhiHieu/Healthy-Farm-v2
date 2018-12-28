@@ -1,6 +1,14 @@
 body {
   font-family: Helvetica, Arial, sans-serif !important ;
 }
+html{ height:100%; }
+body{ 
+		min-height:100%; 
+		padding:0; 
+		margin:0; 
+		position:relative;
+		padding-bottom: 350px; 
+	}
 .main {
   margin-top: 57px;
 }
@@ -39,11 +47,16 @@ body {
   opacity: 1 !important;
 }
 /*end navbar*/
+
 .footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 350px;
   background: none;
   background-color: #2f8d6e;
   background-image: none;
-  padding: 40px 100px 10px 200px;
+  padding: 50px 100px 10px 200px;
   color: white;
 }
 

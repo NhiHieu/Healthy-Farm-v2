@@ -3,6 +3,11 @@ let loginEmail = $('#login-email'),
     loginPassword = $('#login-password');
 
 $(document).ready(function(){
+  if (localStorage.getItem('status')) {
+    toastr.success(localStorage.getItem('status'), "Success");
+    localStorage.clear();
+  }
+
   $('#signup-link, #login-link').click((event)=> {
     event.preventDefault();
     $('#modalLoginForm').modal('toggle');
@@ -77,15 +82,12 @@ function ajaxPost() {
       if (data.hasError) {
         toastr.error(data.message, 'Error');
       } else {
-        toastr.options.onHidden = function() { 
-          location.reload();
-        }
-        toastr.success(data.message, "login success");
+        localStorage.setItem('status', 'Log in successfully');
+        location.reload();
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
       alert('error', textStatus);
-      console.log(err);
     }
     // reset form data
   })

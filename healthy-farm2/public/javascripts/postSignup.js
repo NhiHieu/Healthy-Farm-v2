@@ -7,6 +7,10 @@ let validClass = 'is-valid valid',
     invalidClass = 'is-invalid invalid';
     
 $(document).ready(function(){
+  if (localStorage.getItem('status')) {
+    toastr.success("Sign up successfully", 'Success');
+    localStorage.clear();
+  }
   validateFormSignup();
 
   $('#signup-form').submit(function(event){
@@ -37,15 +41,12 @@ $(document).ready(function(){
         if (data.hasError) {
           toastr.error(data.message, 'Error');
         } else {
-          toastr.options.onHidden = function() { 
-            location.reload();
-          }
-          toastr.success('Success', "Sign up successfully");
+          localStorage.setItem('status', 'Sign up successfully');
+          location.reload();          
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert('error', textStatus);
-        console.log(err);
       }
       // reset form data
     })

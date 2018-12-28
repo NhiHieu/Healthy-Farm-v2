@@ -21,8 +21,8 @@
               <span class='badge badge-success'><%=product.item.price%></span>
               <a class='btn btn-info  ml-auto mr-2' href="/add-to-cart/<%=product.item._id%>" >+</a>
               <h6 class='badge badge-success p-2 mr-2'><%=product.quantity%></h6>
-              <a class='btn btn-info mr-2' href="/reduce-to-cart/<%=product.item._id%>">-</a>
-              <a class='btn btn-info' href="/remove-to-cart/<%=product.item._id%>">x</a>
+              <a class='btn btn-info mr-2' href="/reduce-cart/<%=product.item._id%>">-</a>
+              <a class='btn btn-info' href="/remove-from-cart/<%=product.item._id%>">x</a>
           </li>
           <% } %>
         </ul>

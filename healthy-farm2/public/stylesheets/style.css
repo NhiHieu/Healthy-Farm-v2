@@ -42,10 +42,15 @@ body{
 
 }
 /* message validate form */
-/* override toast */
+/* override toast*/ 
 #toast-container > div {
   opacity: 1 !important;
 }
+/*
+.toast-top-left {
+  top: 60px;
+  left: 12px;
+}*/
 /*end navbar*/
 
 .footer {

@@ -32,19 +32,63 @@ const removeFromCart = (req, res, next)=> {
 }
 
 const updateCartUser = (req, res, next) => {
-  const oldUrl = req.session.oldUrl;
-
   if (req.user) {
     CartUser.findOne({ user: req.user }, (err, cartUser)=>{
       cartUser.cart = req.session.cart;
       cartUser.save((err, result)=>{
-        res.redirect('/products' + oldUrl);
       })
     })
-
-  } else {
-      res.redirect('/products' + oldUrl);
   }
+}
+
+// api
+// add to cart
+const apiAddToCart = (req, res, next)=> {
+  let productId = req.query.productId;
+  let cart = new Cart(req.session.cart ? req.session.cart : {});
+
+  Product.findById(productId, (err, product)=> {
+    if (err) {
+      res.json({
+        message: "Failure"
+      })
+    }
+    cart.add(product, product.id);
+    req.session.cart = cart;
+    updateCartUser(req, res, next);
+    res.json({
+      message: 'Success',
+      totalQuantity: req.session.cart.totalQuantity
+    })
+  })
+}
+
+// reduce cart
+const apiReduceCart = (req, res, next)=> {
+  console.log('call api reduce')
+  let productId = req.query.productId;
+  let cart = new Cart(req.session.cart ? req.session.cart : {});
+  cart.reduce(productId);
+  req.session.cart = cart;
+  console.log(req.session.cart);
+  updateCartUser(req, res, next);
+  res.json({
+    message: 'Success',
+    totalQuantity: req.session.cart.totalQuantity
+  })
+}
+
+// remove product from cart
+const apiRemoveCart = (req, res, next)=> {
+  let productId = req.query.productId;
+  let cart = new Cart(req.session.cart ? req.session.cart : {});
+  cart.remove(productId);
+  req.session.cart = cart;
+  updateCartUser(req, res, next);
+  res.json({
+    message: "Success",
+    totalQuantity: req.session.cart.totalQuantity
+  })
 }
 
 module.exports = {
@@ -52,4 +96,7 @@ module.exports = {
   reduceCart,
   removeFromCart,
   updateCartUser,
+  apiAddToCart,
+  apiReduceCart,
+  apiRemoveCart
 }

@@ -24,7 +24,6 @@ require('./config/passport');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// use csrf to prevent csurf
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,7 +31,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // config to use mdbootstrap
 app.use('/mdbootstrap', express.static(path.join(__dirname, '/node_modules/mdbootstrap')))
+//config to user toastr
+app.use('/toastr', express.static(path.join(__dirname, '/node_modules/toastr/build')));
 
+// config session
 app.use(session({
   secret: 'nosecret',
   resave: false,
@@ -44,6 +46,8 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+// use csrf to prevent csurf
 app.use(csrf());
 
 // connect to database
@@ -63,8 +67,6 @@ app.use((req, res, next)=> {
   res.locals.currentPage = '';
   res.locals.session = req.session;
   res.locals._csrf = req.csrfToken();
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
 

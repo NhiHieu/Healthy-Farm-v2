@@ -4,14 +4,14 @@ toastr.options = {
   "newestOnTop": true,
   "progressBar": false,
   "positionClass": "toast-top-left",
-  "preventDuplicates": true,
+  "preventDuplicates": false,
   "onclick": null,
   "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
+  "hideDuration": "500",
+  "timeOut": "1500",
   "extendedTimeOut": "1000",
-  "showEasing": "swing",
+  "showEasing": "linear",
   "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
+  "showMethod": "slideDown",
+  "hideMethod": "slideUp"
 } 

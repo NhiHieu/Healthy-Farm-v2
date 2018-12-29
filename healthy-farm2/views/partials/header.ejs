@@ -12,7 +12,7 @@
         <a class="<%= currentPage==='products' ? 'nav-link active-nav-link' : 'nav-link' %>" href="/products">Shop</a>
       </li>
       <li class="nav-item mr-1">
-        <a class="nav-link" href="#">How it word</a>
+        <a class="nav-link" href="#">How it work</a>
       </li>
       <li class="nav-item mr-1">
         <a class="nav-link" href="#">Event</a>
@@ -35,7 +35,7 @@
         <a class="nav-link" href="/shopping-cart">
           <i class="fa fa-shopping-cart"></i>
           Cart
-          <span class="badge badge-pill badge-success"><% if (session.cart) {%><%=session.cart.totalQuantity||null%><%}%></span>
+          <span class="badge badge-pill badge-success" id='shopping-cart'><% if (session.cart) {%><%=session.cart.totalQuantity||null%><%}%></span>
         </a>
       </li>
       <% if (user) { %>
@@ -69,7 +69,7 @@
   <div class="modal-dialog modal-notify modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title white-text w-100 font-weight-bold py-2">Create an account</h4>
+        <h4 class="modal-title white-text w-100 font-weight-bold py-2">Log in</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" class="white-text">&times;</span>
         </button>

@@ -19,6 +19,7 @@ $(document).ready(function(){
   $('#loginForm').submit(function(event){    
     event.preventDefault();
     if (validateLogin) {
+      $('#modalLoginForm').modal('toggle');    
       ajaxPost();
     }
   })
@@ -78,7 +79,6 @@ function ajaxPost() {
     dataType: 'json',
     success: function(data) {
       console.log('success', data);
-      $('#modalLoginForm').modal('toggle');    
       if (data.hasError) {
         toastr.error(data.message, 'Error');
       } else {

@@ -44,7 +44,7 @@
                     <h5 class="card-title"><%=products[i][j].name%></h5>
                     <p class="card-text"><%=products[i][j].description%></p>
                     <p class="card-text"><%=products[i][j].price%></p>
-                    <a href="/add-to-cart/<%=products[i][j].id%>" class="btn btn-success">Add to cart</a>
+                    <a href="" product-id='<%=products[i][j].id%>' class="btn btn-success add-product">Add to cart</a>
                   </div>
                 </div>    
               </a>
@@ -63,6 +63,6 @@
   <% include ../partials/footer %>
 </footer>
 <% include ../partials/scripts %>
-
+<script src='/javascripts/cart/addToCart.js'></script>
 </body>
 </html>

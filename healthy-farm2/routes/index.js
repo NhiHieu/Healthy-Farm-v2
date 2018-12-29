@@ -1,16 +1,13 @@
 var express = require('express');
 var router = express.Router();
-const Product = require('../models/product.model');
 const Cart = require('../models/cart.model');
 const Order = require('../models/order.model');
 const CartUser = require('../models/cartUser.model');
-const User = require('../models/user.model');
-const passport = require('passport');
+
 const { 
-  addToCart, 
-  reduceCart,
-  removeFromCart,
-  updateCartUser,
+  apiAddToCart,
+  apiReduceCart,
+  apiRemoveCart
 } = require('../controllers/cart.controller');
 
 // home page 
@@ -23,11 +20,18 @@ router.get('/', (req, res, next)=> {
   });
 })
 
-router.get('/add-to-cart/:productId', addToCart, updateCartUser);
+//router.get('/add-to-cart/:productId', addToCart, updateCartUser);
 
-router.get('/reduce-cart/:productId', reduceCart, updateCartUser);
+//router.get('/reduce-cart/:productId', reduceCart, updateCartUser);
 
-router.get('/remove-from-cart/:productId', removeFromCart, updateCartUser);
+//outer.get('/remove-from-cart/:productId', removeFromCart, updateCartUser);
+
+// rewrite using ajax jquery
+router.get('/cart/api/add-to-cart', apiAddToCart);
+
+router.get('/cart/api/reduce-cart', apiReduceCart);
+
+router.get('/cart/api/remove-from-cart', apiRemoveCart);
 
 
 router.get('/shopping-cart', (req, res, next) => {

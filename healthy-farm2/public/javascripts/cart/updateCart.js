@@ -1,12 +1,4 @@
 $(document).ready(function(){
-  let user = '<%-JSON.stringify(user)%>';
-  // check out
-  $('#checkout-link').click((event)=> {
-    if (!user) {
-      event.preventDefault();
-      toastr.warning("You must log in before checkout", "Warning")
-    }
-  })
 
   if (localStorage.getItem('msgCart')) {
     toastr.success(localStorage.getItem('msgCart'), 'Success');

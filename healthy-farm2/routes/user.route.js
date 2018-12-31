@@ -8,7 +8,7 @@ router.get('/log-out', middleware.isLoggedIn, userController.logout);
 
 router.get('/profile', middleware.isLoggedIn, userController.getProfile);
 
-router.use('/', middleware.notLoggedIn, userController.checkNotLoggedIn);
+router.use('/', middleware.notLoggedIn);
 
 // rewrite login and signup using ajax jquery
 router.post('/api/login', userController.apiLogin)

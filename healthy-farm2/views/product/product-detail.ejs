@@ -9,48 +9,152 @@
   <% include ../partials/header %>
 </header>
 <main class="main">
-  <div class='container'>
-    <div class='row p-5'>
-      <div class='col-8'>
-        <img style='width: 600px; height: auto' src='<%=product.imgUrl%>'' alt="<%product.name%>"/>
-      </div>
-      <div class='col-4 d-flex flex-column justify-content-start'>
-        <div class='list-group'>
-          <h5 class="card-title"><%=product.name%></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%=product.price%></h6>
-          <p class='card-text'><%=product.description%> some Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-        <input type='hidden' class='product-id' value='<%=product.id%>'/>
-        <a href='/add-to-cart/<%=product.id%>' class='btn btn-success mt-auto add-product'>Add to cart</a>
-      </div>
-    </div>
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+      <div class="container dark-grey-text mt-5">
+  
+        <!--Grid row-->
+        <div class="row wow fadeIn mb-5">
+  
+          <!--Grid column-->
+          <div class="col-md-6 px-0 view overlay">
 
-    <h1>Related products</h1>
-    <div class='row'>
-        <% for (let j = 0; j < listProduct.length; j++) { %>
-          <div class='col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center p-3'>
-              <a href='/products/product-detail/<%=listProduct[j].id%>' style='text-decoration: none; color: black'>
-                <div class="card" style="width: 18rem;">
-                  <img class="card-img-top" src="<%=listProduct[j].imgUrl%>" alt="Card image cap">
-                  <div class="card-body">
-                    <h5 class="card-title"><%=listProduct[j].name%></h5>
-                    <p class="card-text"><%=listProduct[j].description%></p>
-                    <p class="card-text"><%=listProduct[j].price%></p>
-                    <input type='hidden' class='product-id' value="<%=listProduct[j].id%>"/>
-                    <a href="" class="btn btn-success add-product">Add to cart</a>
-                  </div>
-                </div>    
+            <img src='<%=product.imgUrl%>' class="img-fluid" alt="" style='height: 100%'>
+            <div class="mask rgba-indigo-slight">
+            </div>
+          </div>
+          <!--Grid column-->
+  
+          <!--Grid column-->
+          <div class="col-md-6 mb-4 px-5">
+  
+            <!--Content-->
+  
+            <div class="mb-4">
+              <h4 class='h4 font-weight-bold text-primary'><%=product.name%></h4>
+            </div>
+
+            <p class='font-weight-bold mb-2'>Description: </p>
+            <span class='text-grey lighten-4 description' style="white-space: pre-line !important"><%=product.description%></span>
+            <hr class='grey lighten-4'/>
+
+            <div class="mb-2 mb-sm-0 pt-1">
+              <span class='font-weight-bold'>Category: </span>
+              <a href="/products/categories/<%=product.category.id%>" target="_blank"><%=product.category.name%></a>
+            </div>
+            <div class="mb-2 mb-sm-0 pt-1">
+              <span class='font-weight-bold'>Tag: </span>
+              <a href="/products/categories/<%=product.category.id%>" target="_blank"><%=product.category.name%></a>
+            </div>
+            <hr class='grey lighten-4'/>
+
+            <div class="mb-2 mb-sm-0 pt-1">
+              <span class='font-weight-bold'>Price: </span>
+              <span class='font-weight-normal' style='color: #007bff'><%=product.price%> VND</span>
+            </div>
+            
+            <div class="mb-2 mb-sm-0 pt-1">
+              <span class='font-weight-bold'>Unit: </span>
+              <span class='font-weight-normal' style='color: #007bff'><%=product.unit%></span>
+            </div>
+
+            <div class="d-flex py-3">
+              <!-- Default input -->
+              <input type="number"id='quantity' name='quantity'value="1" min="1" max='100' aria-label="Search" class="form-control" style="width: 100px">
+              <a href="" product-id='<%=product.id%>' class="btn btn-dark-green btn-md my-0 add-product">
+                Add to cart
+                <i class="fa fa-shopping-cart ml-1"></i>
               </a>
             </div>
+              
+            
+            <!--Content-->
+            
+          </div>
+          <!--Grid column-->
+  
+        </div>
+        <!--Grid row-->
+  
+        <hr>
+  
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center wow fadeIn">
+  
+          <!--Grid column-->
+          <div class="col-md-6 text-center">
+  
+            <h2 class="my-5 h2 text-default">Related Products</h2>
+
+          </div>
+          <!--Grid column-->
+  
+        </div>
+        <!--Grid row-->
+  
+        <!--Grid row-->
+        <div class="row wow fadeIn mb-4">
+          
+          <% for (let j = 0; j < listProduct.length; j++) { %>
+          <!--Grid column-->
+          <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+            <!--Card-->
+            <div class="card">
+    
+              <!--Card image-->
+              <div class="view overlay border-bottom border-light">
+                <img src="<%=listProduct[j].imgUrl%>" class="card-img-top" style='height: 200px' alt="">
+                <a href='/products/product-detail/<%=listProduct[j].id%>'>
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <!--Card image-->
+
+              <!--Card content-->
+              <div class="card-body">
+                <!--Category & Title-->
+                <a href="/products/product-detail/<%=listProduct[j].id%>" class="dark-grey-text">
+                  <h5 class=' text-truncate'><strong><%=listProduct[j].name%></strong></h5>
+                </a>
+                <hr>
+                <p>
+                  <strong>
+                    <a href="/products/product-detail/<%=listProduct[j].id%>" class="grey-text crop-text-2">
+                      <%=listProduct[j].description%>
+                    </a>
+                  </strong>
+                </p>
+
+                <h6 class="blue-text">
+                  <strong><%=listProduct[j].price%> VND</strong>
+                </h6>
+                <a href="" product-id='<%=listProduct[j].id%>' class="btn btn-dark-green btn-md ml-0 add-product">Add to cart<i class="fa fa-cart-arrow-down pl-1"></i></a>
+              </div>
+              <!--Card content-->
+  
+            </div>
+            <!--Card-->
+  
+          </div>
+          <!--Grid column-->
           <% } %>
-    </div>
-  </div>
+  
+          
+  
+        </div>
+        <!--Grid row-->
+  
+      </div>
+    </main>
+    <!--Main layout-->
+
 </main>
 
 <footer>
   <% include ../partials/footer %>
 </footer>
 <% include ../partials/scripts %>
+
 <script src='/javascripts/cart/addToCart.js'></script>
 </body>
 </html>

@@ -20,12 +20,6 @@ router.get('/', (req, res, next)=> {
   });
 })
 
-//router.get('/add-to-cart/:productId', addToCart, updateCartUser);
-
-//router.get('/reduce-cart/:productId', reduceCart, updateCartUser);
-
-//outer.get('/remove-from-cart/:productId', removeFromCart, updateCartUser);
-
 // rewrite using ajax jquery
 router.get('/cart/api/add-to-cart', apiAddToCart);
 

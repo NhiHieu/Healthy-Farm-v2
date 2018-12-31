@@ -19,19 +19,20 @@ body{
   height: 40px;
 }
 
-.navbar {
+.my-navbar {
   padding: 0px 20px !important;
 }
-.nav-link {
+
+.my-nav-link {
   border-bottom: 3px solid transparent;
   padding: 15px 10px !important;
   transition: all .3s;
 }
-.nav-link:hover, .active-nav-link {
+.my-nav-link:hover, .my-active-nav-link {
   border-bottom-color: #4285f4!important;;
   color: #4285f4!important;;
 }
-.active-nav-link {
+.my-active-nav-link {
   font-weight: bold;
 }
 /* message validate form */
@@ -80,4 +81,21 @@ body{
 .nav-item .footer-link {
   color: white;
   text-decoration: none;
+}
+
+/* truncate text */
+.crop-text-1 {
+  -webkit-line-clamp: 1;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.crop-text-2 {
+  -webkit-line-clamp: 2;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  height: 44px;
 }

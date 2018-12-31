@@ -45,6 +45,8 @@ const updateCartUser = (req, res, next) => {
 // add to cart
 const apiAddToCart = (req, res, next)=> {
   let productId = req.query.productId;
+  let quantity = parseInt(req.query.quantity) || 1;
+  console.log(quantity);
   let cart = new Cart(req.session.cart ? req.session.cart : {});
 
   Product.findById(productId, (err, product)=> {
@@ -53,7 +55,7 @@ const apiAddToCart = (req, res, next)=> {
         message: "Failure"
       })
     }
-    cart.add(product, product.id);
+    cart.add(product, product.id, quantity);
     req.session.cart = cart;
     updateCartUser(req, res, next);
     res.json({
@@ -84,6 +86,7 @@ const apiRemoveCart = (req, res, next)=> {
   let cart = new Cart(req.session.cart ? req.session.cart : {});
   cart.remove(productId);
   req.session.cart = cart;
+  console.log('remove cart is called', productId);
   updateCartUser(req, res, next);
   res.json({
     message: "Success",
@@ -92,10 +95,6 @@ const apiRemoveCart = (req, res, next)=> {
 }
 
 module.exports = {
-  addToCart,
-  reduceCart,
-  removeFromCart,
-  updateCartUser,
   apiAddToCart,
   apiReduceCart,
   apiRemoveCart

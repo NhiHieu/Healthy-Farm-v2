@@ -86,6 +86,17 @@
   <% include ../partials/footer %>
 </footer>
 <% include ../partials/scripts %>
+<script>
+
+let user = '<%-JSON.stringify(user)%>';
+  // check out
+  $('#checkout-link').click((event)=> {
+    if (!user) {
+      event.preventDefault();
+      toastr.warning("You must log in before checkout", "Warning")
+    }
+  })
+</script>
 <script src='/javascripts/cart/updateCart.js'></script>
 </body>
 </html>

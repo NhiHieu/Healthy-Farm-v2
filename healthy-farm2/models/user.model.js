@@ -34,6 +34,10 @@ const userSchema = new Schema({
     required: true,
     maxlength: 20
   },
+  role:{
+    type: Schema.Types.ObjectId, 
+    ref: 'Role'
+  },
   PhoneNumber:{
     type: Number,
     maxlength: 12,
@@ -50,9 +54,7 @@ const userSchema = new Schema({
   Birth:{
     type: Date,
   },
-  Role:{
-    type: Schema.Types.ObjectId, ref: 'Role'
-  }
+ 
 })
 
 userSchema.methods.hashPassword = (password) =>{

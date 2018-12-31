@@ -1,4 +1,4 @@
- <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+ <nav class="navbar my-navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <a class="navbar-brand" href="/">
     <img class='logo'src="https://healthyfarm.org/wp-content/uploads/2018/02/healthyfarm-logo-horizontal-web.svg" alt="Healthy Farm" title="Healthy Farm">
   </a>
@@ -9,19 +9,19 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
       <li class="nav-item mr-1">
-        <a class="<%= currentPage==='products' ? 'nav-link active-nav-link' : 'nav-link' %>" href="/products">Shop</a>
+        <a class="nav-link <%= currentPage==='products' ? 'my-nav-link my-active-nav-link' : 'my-nav-link' %>" href="/products">Shop</a>
       </li>
       <li class="nav-item mr-1">
-        <a class="nav-link" href="#">How it work</a>
+        <a class="my-nav-link nav-link" href="#">How it work</a>
       </li>
       <li class="nav-item mr-1">
-        <a class="nav-link" href="#">Event</a>
+        <a class="my-nav-link nav-link" href="#">Event</a>
       </li>
       <li class="nav-item mr-1">
-        <a class="nav-link" href="#">Vendor</a>
+        <a class="my-nav-link nav-link" href="#">Vendor</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Blog</a>
+        <a class="my-nav-link nav-link" href="#">Blog</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0 ml-5 mr-3" style="flex: 1">
@@ -32,15 +32,15 @@
 
     <ul class="navbar-nav ml-auto">
       <li class="nav-item mr-2">
-        <a class="nav-link" href="/shopping-cart">
+        <a class="nav-link my-nav-link" href="/shopping-cart">
           <i class="fa fa-shopping-cart"></i>
           Cart
-          <span class="badge badge-pill badge-success" id='shopping-cart'><% if (session.cart) {%><%=session.cart.totalQuantity||null%><%}%></span>
+          <span class="badge badge-success" id='shopping-cart'><% if (session.cart) {%><%=session.cart.totalQuantity||null%><%}%></span>
         </a>
       </li>
       <% if (user) { %>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <a class="my-nav-link nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <i class="fa fa-user"></i> Profile </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
             <a class="dropdown-item waves-effect waves-light" href="/user/profile">My account</a>
@@ -49,12 +49,12 @@
         </li>
       <% }  else { %>
       <li class="nav-item mr-2">
-        <a class="nav-link"href=""  data-toggle="modal" data-target="#modalLoginForm">
+        <a class="nav-link my-nav-link"href=""  data-toggle="modal" data-target="#modalLoginForm">
           Log in
         </a>
       </li> 
       <li class="nav-item">
-        <a class='nav-link'href="" data-toggle="modal" data-target="#modalRegisterForm">
+        <a class='nav-link my-nav-link'href="" data-toggle="modal" data-target="#modalRegisterForm">
           Sign up
         </a>
       </li>

@@ -28,10 +28,6 @@ const getProfile = (req, res, next)=> {
 
 }
 
-const checkNotLoggedIn = (req, res, next)=> {
-  next();
-}
-
 const apiLogin = (req, res, next)=> {
   passport.authenticate('local.login', (err, user, info)=>{
     console.log(user, err, info);
@@ -75,7 +71,6 @@ const apiSignup = (req, res, next)=> {
 module.exports = {
   logout,
   getProfile,
-  checkNotLoggedIn,
   apiLogin,
   apiSignup
 }

@@ -12,13 +12,21 @@ const getProductChunk = (products, chunkSize) => {
   return result;
 }
 
+const shuffleArray = (arr)=> {
+  for (let i = 0; i < arr.length; i++) {
+    let index = Math.floor(Math.random()*arr.length);
+    [arr[i], arr[index]] = [arr[index], arr[i]];
+  }
+  return arr;
+}
+
 router.use((req, res, next)=> {
   res.locals.currentPage = 'products';
   next();
 })
 router.get('/', middleware.getOldUrl, (req, res, next)=> {
   Product.find((err, products)=>{
-    let productChunk = getProductChunk(products, 4);
+    let  productChunk = getProductChunk(shuffleArray(products), 4);
     Category.find((err, result)=> {
       res.render('product/product-list', {
         products: productChunk,
@@ -56,11 +64,14 @@ router.get('/categories/:cateId', middleware.getOldUrl, (req, res, next)=> {
 
 router.get('/product-detail/:productId', middleware.getOldUrl, (req, res, next) => {
   const productId = req.params.productId;
-  Product.findById(productId, (err, product)=> {
-    Product.find({ category: product.category }, (error, listProduct)=> {
+  Product
+    .findById(productId)
+    .populate('category')
+    .exec((err, product)=> {
+    Product.find({ category: product.category.id }, (error, listProduct)=> {
       res.render('product/product-detail', {
         product,
-        listProduct: listProduct.filter((pro)=>pro.id!==product.id).slice(0, 3)
+        listProduct: listProduct.filter((pro)=>pro.id!==product.id).slice(0, 4)
       })
     })
 

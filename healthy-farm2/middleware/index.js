@@ -20,5 +20,5 @@ const notLoggedIn = (req, res, next) => {
 module.exports = {
   getOldUrl,
   isLoggedIn,
-  notLoggedIn
+  notLoggedIn,
 }

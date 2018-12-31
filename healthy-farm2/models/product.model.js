@@ -22,10 +22,12 @@ const productSchema = new Schema({
   },
   category: {
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: "Category"
   },
   unit:{
-    type: Number
+    type: String,
+    required: true
   },
   sellerId:{
     type: Schema.Types.ObjectId,

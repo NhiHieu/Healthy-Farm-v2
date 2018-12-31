@@ -3,18 +3,18 @@ function Cart(oldCart) {
   this.totalQuantity = oldCart.totalQuantity || 0;
   this.totalPrice = oldCart.totalPrice || 0;
 
-  this.add = function(item, id) {
+  this.add = function(item, id, quantityProduct = 1) {
     let storedItem = this.items[id];
     if (!storedItem) {
       storedItem = this.items[id] = { item, quantity: 0, price: 0};
     }
     //
-    storedItem.quantity++;
-    storedItem.price = this.items[id].item.price * storedItem.quantity;
-
-    //
-    this.totalQuantity++;
-    this.totalPrice += this.items[id].item.price;
+    storedItem.quantity += quantityProduct;
+    storedItem.price = item.price * storedItem.quantity;
+    
+    // total
+    this.totalQuantity += quantityProduct;
+    this.totalPrice += item.price * quantityProduct;
   }
 
   this.reduce = function(id) {

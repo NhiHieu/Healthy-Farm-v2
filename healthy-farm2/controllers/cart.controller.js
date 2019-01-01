@@ -3,34 +3,6 @@ const Cart = require('../models/cart.model');
 const CartUser = require('../models/cartUser.model');
 
 
-const addToCart = (req, res, next) => {
-  let productId = req.params.productId;
-  let cart = new Cart(req.session.cart ? req.session.cart : {});
-
-  Product.findById(productId, (err, product)=> {
-    cart.add(product, product.id);
-    req.session.cart = cart;
-    next();
-  })
-}
-
-const reduceCart = (req, res, next)=> {
-  let productId = req.params.productId;
-  let cart = new Cart(req.session.cart ? req.session.cart : {});
-  cart.reduce(productId);
-  req.session.cart = cart;
-  console.log(req.session.cart);
-  next();
-}
-
-const removeFromCart = (req, res, next)=> {
-  let productId = req.params.productId;
-  let cart = new Cart(req.session.cart ? req.session.cart : {});
-  cart.remove(productId);
-  req.session.cart = cart;
-  next();
-}
-
 const updateCartUser = (req, res, next) => {
   if (req.user) {
     CartUser.findOne({ user: req.user }, (err, cartUser)=>{
@@ -41,12 +13,44 @@ const updateCartUser = (req, res, next) => {
   }
 }
 
+const getShoppingCart = (req, res, next) => {
+  if (!req.session.cart) {
+    res.render('cart/shopping-cart', { products: null })
+  } else {
+    let cart = new Cart(req.session.cart);
+    Product.find({}).limit(4).exec((err, listProducts)=> {
+      console.log(listProducts);
+      if (listProducts) {
+        res.render('cart/shopping-cart', { 
+          products: cart.toArray(),  
+          totalPrice: cart.totalPrice,
+          listProducts
+        });
+      }
+    })
+    
+  }
+}
+
+const getCheckout = (req, res, next)=> {
+  console.log(req.session.cart);
+  if (!req.session.cart) {
+    console.log('call');
+    res.redirect('/shopping-cart')
+  } else {
+    console.log('call2');
+    let cart = new Cart(req.session.cart);
+    res.render('cart/checkout', {
+      listProducts: cart.toArray()
+    });
+  }
+  
+}
 // api
 // add to cart
 const apiAddToCart = (req, res, next)=> {
   let productId = req.query.productId;
   let quantity = parseInt(req.query.quantity) || 1;
-  console.log(quantity);
   let cart = new Cart(req.session.cart ? req.session.cart : {});
 
   Product.findById(productId, (err, product)=> {
@@ -97,5 +101,7 @@ const apiRemoveCart = (req, res, next)=> {
 module.exports = {
   apiAddToCart,
   apiReduceCart,
-  apiRemoveCart
+  apiRemoveCart,
+  getShoppingCart,
+  getCheckout
 }

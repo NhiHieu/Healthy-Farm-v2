@@ -10,7 +10,15 @@ const orderSchema = new Schema({
     type: Object,
     required: true
   }, 
-  name: {
+  orderDate: {
+    type: Date,
+    required: true,
+  },
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
     type: String,
     required: true
   },

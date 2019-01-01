@@ -10,23 +10,20 @@ function Cart(oldCart) {
     }
     //
     storedItem.quantity += quantityProduct;
-    storedItem.price = item.price * storedItem.quantity;
+    storedItem.price += item.price * quantityProduct;
     
     // total
     this.totalQuantity += quantityProduct;
     this.totalPrice += item.price * quantityProduct;
   }
 
-  this.reduce = function(id) {
-    this.items[id].quantity--;
-    this.items[id].price -= this.items[id].item.price;
+  this.reduce = function(id, quantity = 1) {
+    this.items[id].quantity -= quantity;
+    this.items[id].price -= this.items[id].item.price * quantity;
 
-    this.totalQuantity--;
-    this.totalPrice -= this.items[id].item.price;
+    this.totalQuantity -= quantity;
+    this.totalPrice -= this.items[id].item.price * quantity;
 
-    if (this.items[id].quantity===0){ 
-      delete this.items[id];
-    }
   }
 
   this.remove = function(id) {

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const createError = require('http-errors');
 const Cart = require('../models/cart.model');
 const Order = require('../models/order.model');
 const CartUser = require('../models/cartUser.model');
@@ -7,17 +8,14 @@ const CartUser = require('../models/cartUser.model');
 const { 
   apiAddToCart,
   apiReduceCart,
-  apiRemoveCart
+  apiRemoveCart,
+  getShoppingCart,
+  getCheckout
 } = require('../controllers/cart.controller');
 
 // home page 
 router.get('/', (req, res, next)=> {
-  let successMsg = req.flash('successMsg')[0];
-  console.log('message from flash', successMsg);
-  res.render('pages/home', {
-    successMsg: successMsg,
-    noMessages: !successMsg
-  });
+  res.render('pages/home');
 })
 
 // rewrite using ajax jquery
@@ -27,27 +25,11 @@ router.get('/cart/api/reduce-cart', apiReduceCart);
 
 router.get('/cart/api/remove-from-cart', apiRemoveCart);
 
+router.get('/shopping-cart', getShoppingCart);
 
-router.get('/shopping-cart', (req, res, next) => {
-  if (!req.session.cart) {
-    res.render('product/shopping-cart', { products: null})
-  } else {
-    let cart = new Cart(req.session.cart);
-    res.render('product/shopping-cart', { 
-      products: cart.toArray(),  
-      totalPrice: cart.totalPrice
-    });
-  }
-})
+router.get('/checkout', getCheckout);
 
-router.get('/checkout', isLoggedIn, (req, res, next)=> {
-  if (!req.session.cart) {
-    res.redirect('/shopping-cart')
-  }
-  res.render('product/checkout');
-})
-
-router.post('/checkout', isLoggedIn, (req, res, next)=> {
+router.post('/checkout', (req, res, next)=> {
   if (!req.session.cart) {
     res.redirect('/shopping-cart');
   }
@@ -55,11 +37,13 @@ router.post('/checkout', isLoggedIn, (req, res, next)=> {
   const order = new Order({
     user: req.user,
     cart: cart,
-    name: req.body.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     address: req.body.address,
-    phoneNumber: req.body.phoneNumber
+    phoneNumber: req.body.phoneNumber,
+    orderDate: new Date(),
   })
-  order.save((err, result)=> {
+  order.save((err, order)=> {
     console.log(req.body);
     req.flash('successMsg', 'buy products successfully');
     req.session.cart = null;
@@ -67,16 +51,30 @@ router.post('/checkout', isLoggedIn, (req, res, next)=> {
       console.log(cartUser);
       cartUser.cart = null;
       console.log('buy success', cartUser.cart);
-      cartUser.save((err, result)=>{
+      cartUser.save((err, newCartUser)=>{
         if (err) {
           console.log(err);
         }
-        console.log(result);
-        res.redirect('/');
+        console.log(newCartUser);
+        res.redirect('/order-complete/success?orderId=' + order.id);
       })
     })
   })
   
+})
+
+router.get('/order-complete/success', (req, res, next)=> {
+    Order.findById(req.query.orderId, (err, order)=> {
+    if (!req.query.orderId) {
+      res.render('error', {
+        error: createError(404),
+        message: 'your order not found'
+      })
+    } else 
+    res.render('cart/order-complete', {
+      order
+    });
+  })
 })
 
 router.get('/test', (req, res, next)=> {
@@ -88,14 +86,6 @@ router.get('/test2', (req, res, next)=> {
   res.render('test2');
 })
 
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  req.session.oldUrl = req.url;
-  res.redirect('/user/log-in');
-}
 
 
 module.exports = router;

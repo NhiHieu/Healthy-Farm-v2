@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ../partials/head %>
+</head>
+<body>
+
+<header>
+  <% include ../partials/header %>
+</header>
+<!--Main layout-->
+<main class="mt-5 pt-4">
+    <div class="container wow fadeIn">
+
+      <!-- Heading -->
+      <h2 class="my-5 h2 text-center">Checkout form</h2>
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <form method="POST" class="card-body" id='checkoutForm' novalidate>
+              <h4 class='my-3'>
+                <span class="text-muted">Billing detail</span>
+              </h4>
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-2">
+
+                  <!--firstName-->
+                  <div class="md-form ">
+                    <input type="text" name='firstName' id="firstName" class="form-control input-checkout">
+                    <label for="firstName" class="">First name</label>
+                    <div class="valid-feedback message ml-0">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback message ml-0">
+                      Please provide your first name
+                    </div>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-2">
+
+                  <!--lastName-->
+                  <div class="md-form">
+                    <input type="text" name='lastName' id="lastName" class="form-control input-checkout">
+                    <label for="lastName" class="">Last name</label>
+                    <div class="valid-feedback message ml-0">
+                      Looks good!
+                    </div>
+                    <div class="invalid-feedback message ml-0">
+                      Please provide your last name
+                    </div>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+              <!--address-->
+              <div class="md-form mb-5">
+                <input type="text" name='address' id="address" class="form-control input-checkout" placeholder="8 ha van tinh">
+                <label for="address" class="">Address</label>
+                <div class="valid-feedback message ml-0">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback message ml-0">
+                  Please provide your address
+                </div>
+              </div>
+
+              <!--phone number-->
+              <div class="md-form mb-5">
+                <input type="text" name='phoneNumber' id="phoneNumber" class="form-control input-checkout" placeholder="0377473272">
+                <label for="phoneNumber" class="">Phone number</label>
+                <div class="valid-feedback message ml-0">
+                  Looks good!
+                </div>
+                <div class="invalid-feedback message ml-0">
+                  Please provide your phone number
+                </div>
+              </div>
+              <h4 class='my-3'>
+                <span class="text-muted">Payment method</span>
+              </h4>
+              <hr>
+              <!-- //use later
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="same-address">
+                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="save-info">
+                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+              </div>
+
+              <hr>
+              -->
+              <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                  <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                  <label class="custom-control-label" for="cash">Cash on deliver</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="credit">Credit card</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="paypal">Paypal</label>
+                </div>
+              </div>
+              <hr class="mb-4">
+              <input type='hidden' name='_csrf' value="<%=_csrf%>"/>
+              <button class="btn btn-primary btn-lg btn-block" id='btn-checkout' type="submit">Place an order</button>
+
+            </form>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-4">
+          <div class='mb-4 z-depth-1'>
+            <!-- Heading -->
+            <h4 class="d-flex justify-content-between align-items-center py-3 px-3">
+              <span class="text-muted">Your cart</span>
+              <span class="badge badge-danger badge-pill"><%=session.cart.totalQuantity%></span>
+            </h4>
+
+            <!-- Cart -->
+            <ul class="list-group mb-3">
+              <% listProducts.forEach(product=> { %>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0"><%=product.item.name%> x <%=product.quantity%></h6>
+                    <small class="text-muted"><%=product.item.price%></small>
+                  </div>
+                  <span class="text-muted"><%=product.price%></span>
+                </li>
+              <% }) %>
+              <li class="list-group-item d-flex justify-content-between">
+                <span class='font-weight-bold'>Total (VND):</span>
+                <span class='font-weight-bold'><%=session.cart.totalPrice%></span>
+              </li>
+            </ul>
+            <!-- Cart -->
+          </div>
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+
+<footer>
+  <% include ../partials/footer %>
+</footer>
+<% include ../partials/scripts %>
+<script src="/javascripts/cart/checkout.js"></script>
+</body>
+</html>

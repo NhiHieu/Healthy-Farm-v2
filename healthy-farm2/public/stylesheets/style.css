@@ -82,7 +82,10 @@ body{
   color: white;
   text-decoration: none;
 }
-
+.btn-rounded {
+  -webkit-border-radius: 10em;
+  border-radius: 10em;
+}
 /* truncate text */
 .crop-text-1 {
   -webkit-line-clamp: 1;

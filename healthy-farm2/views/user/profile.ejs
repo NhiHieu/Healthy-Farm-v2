@@ -8,49 +8,129 @@
 <header>
   <% include ../partials/header %>
 </header>
-<main class="main container">
-  <h1>Profile</h1>
-  <p><%=user.username%></p>  
-  <p><%=user.firstName%></p>
-  <p><%=user.lastName%></p>
-  <p><%=user.email%></p>
-  <button class='btn btn-success' id='linkButton'>ClickMe</button>
+<main class="main container py-5">
+     <!--Modal: modalConfirmDelete-->
+     <div class="modal fade"id="modalConfirmDelete1" data-toggle="modal" data-target="#modalConfirmDelete1"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+       <!--Content-->
+       <div class="modal-content text-center">
+         <!--Header-->
+         <div class="modal-header d-flex justify-content-center">
+           <p class="heading">Confirm delete</p>
+         </div>
+   
+         <!--Body-->
+         <div class="modal-body">
+   
+           <i class="fa fa-times fa-4x animated rotateIn"></i>
+           <p><strong>Are you sure you want to cancel this order?</strong></p>
+   
+         </div>
+   
+         <!--Footer-->
+         <div class="modal-footer flex-center">
+           <a href="" class="btn  btn-outline-danger confirm-cancel-order">Yes</a>
+           <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+         </div>
+       </div>
+       <!--/.Content-->
+     </div>
+   </div>
+  <!--Modal: modalConfirmDelete-->
 
-  <h1>All orders</h1>
-  <% orders.forEach(order=>{ %>
-
-  <div class="card mb-2">
-    <div class="card-header">
-      <%= order.name%>
-    </div>
-    <ul class="list-group">
-      <% order.items.forEach(ele=>{ %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <%= ele.item.name %> | <%= ele.quantity %>
-          <span class="badge badge-primary badge-pill"><%= ele.price %></span>
-        </li>
-      <% }) %>
-    </ul>
-    <div class='card-footer'><%= order.cart.totalPrice %></div>
+  <h3 class='h3 font-weight-bold text-center'>Profile</h3>
+  <div class='row py-2'>
+    <span class='col-2 font-weight-bold'>Username: </span>
+    <spane class='col-9 text-muted'><%=user.username%></span>
+  </div>  
+  <div class='row'>
+    <span class='col-2 font-weight-bold'>Email: </span>
+    <span class='col-9 text-muted'><%=user.email%></span>
   </div>
-  <% }) %>
 
+
+  <h3 class='h3 font-weight-bold text-center pt-5 pb-2'>All orders</h3>
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Order</th>
+          <th scope="col">Date</th>
+          <th scope="col">Total quantity</th>
+          <th scope="col">Total Price (VND)</th>
+          <th scope='col'>Status</th>
+          <th scope='col'>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < orders.length; i++) { %>
+          <tr>
+            <th scope="row"><%=i+1%></th>
+            <td><%=orders[i].orderDate.toString().slice(4, 16)%></td>
+            <td><%=orders[i].cart.totalQuantity%></td>
+            <td><%=orders[i].cart.totalPrice%></td>
+            <td>Pending</td>
+            <td>
+              <a href='/orders/<%=orders[i].id%>' class='btn btn-primary btn-sm'>Detail order</a>
+              <a href='/orders/delete/<%=orders[i].id%>'order-id='<%=orders[i].id%>' class='btn btn-danger btn-sm cancel-order'>Cancel order</a>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+ 
 </main>
 
 <footer>
   <% include ../partials/footer %>
 </footer>
 <% include ../partials/scripts %>
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    toastr.options.timeOut = 1500; // 1.5s
-    toastr.info('Page Loaded!');
-    $('#linkButton').click(function() {
-       toastr.success('Click Button');
-    });
-  });
-  </script>
+
+<!--
+<script>
+  $(document).ready(()=> {
+    if (localStorage.getItem('successMsg')) {
+      toastr.success(localStorage.getItem('successMsg'), 'Success');
+      localStorage.clear();
+    }
+
+    $('.cancel-order').each((i, e)=>{
+
+      $(e).click((event)=> {
+        event.preventDefault();
+        let orderId = $(e).attr('order-id');
+        console.log(orderId);
+
+        $('.confirm-cancel-order').click((event)=> {
+          event.preventDefault();
+          console.log(orderId);
+          // ajax call
+          console.log('why not call');
+          $.ajax({
+            type: 'GET',
+            contentType : "application/json",
+            url : "/orders/delete" ,
+            data: {
+              orderId
+            },
+            dataType: 'json',
+            success: (result)=> {
+              if (result.message == 'Success') {
+                localStorage.setItem('successMsg', 'Cancel your order successfully');
+                location.reload();
+              } else {
+                toastr.error('Failure to cancel this order', 'Error');
+              }
+            },
+            error: ()=> {
+              alert('error');
+            }
+          })
+        })
+      })
+    })
+  })
+</script>
+-->
 </body>
 </html>

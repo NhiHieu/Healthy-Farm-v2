@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ../partials/head %>
+</head>
+<body>
+
+<header>
+  <% include ../partials/header %>
+</header>
+<main class="main">
+  <div class='container mb-5'>
+    <div style='margin-top: 100px'></div>
+    <h2 class='h2 text-info font-weight-bold my-4'>Order detail:</h2>
+    <div class='row'>
+      <div class='col-6'>
+        <div class="card ">
+          <div class="card-header font-weight-bold text-danger">
+            Billing address
+          </div>
+          <div class="card-body">
+            <div class='row'>
+              <span class='col-3 font-weight-bold'>Order status: </span>
+              <span class='col-9 card-text'>pending</span>
+            </div>
+            <div class='row'>
+              <span class='col-3 font-weight-bold'>Order date: </span>
+              <span class='col-9 card-text'><%=order.orderDate.toString().slice(0, 24)%></span>
+            </div>
+            <div class='row'>
+              <span class='col-3 font-weight-bold'>Order total: </span>
+              <span class='col-9 card-text'><%=order.cart.totalPrice%></span>
+            </div>
+            <div class='row'>
+              <span class='col-3 font-weight-bold'>Address: </span>
+              <div class='col-9 card-text'>
+                <span class='d-block'><%=order.firstName+' '+order.lastName%></span>
+                <span class='d-block'><%=order.address%></span>
+                <span><%=order.phoneNumber%></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='col-6'>
+        <div class="card">
+          <div class="card-header font-weight-bold text-danger">
+            Payment
+          </div>
+          <div class="card-body">
+            <div class='row'>
+              <span class='col-4 font-weight-bold'>Payment method: </span>
+              <span class='col-8 card-text'>Cash on Delivery</span>
+            </div>
+            <div class='row'>
+              <span class='col-4 font-weight-bold'>Method status: </span>
+              <span class='col-8 card-text'>Pending</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h4 class='h4 font-weight-bold mt-5 mb-2'>Products</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% order.items.forEach(product=> {%>
+          <tr>
+            <th scope="row"><%=product.item.name%></th>
+            <td><%=product.item.unit%></td>
+            <td><%=product.item.price%></td>
+            <td><%=product.quantity%></td>
+            <td><%=product.price%></td>
+          </tr>
+        <%})%>
+          <tr>
+            <td colspan="2"></td>
+            <td class='font-weight-bold'>Total (VND): </td>
+            <td><%=order.cart.totalQuantity%></td>
+            <td><%=order.cart.totalPrice%></td>
+          </tr>
+      </tbody>
+    </table>
+    <a href="/products" class='btn btn-dark-green btn-rounded'><i class="fa fa-angle-left pr-2"></i>Continue Shopping</a>
+  </div>
+</main>
+
+<footer>
+  <% include ../partials/footer %>
+</footer>
+<% include ../partials/scripts %>
+
+</body>
+</html>

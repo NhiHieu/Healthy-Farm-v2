@@ -12,7 +12,6 @@ $(document).ready(()=> {
     if (!validateCheckout) {
       event.preventDefault();
     } 
-    $(this).submit();
   });
 
 })
@@ -28,6 +27,9 @@ function validateCheckoutForm() {
         $(e).addClass(validClass).removeClass(invalidClass);
       }
     })
+    if (validateCheckout) {
+      $('#checkoutForm').submit();
+    }
   })
   $('.input-checkout').each((i, e)=> {
     console.log($(e).val());

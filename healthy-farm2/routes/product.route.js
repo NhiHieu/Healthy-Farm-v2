@@ -26,7 +26,7 @@ router.use((req, res, next)=> {
 })
 router.get('/', middleware.getOldUrl, (req, res, next)=> {
   Product.find((err, products)=>{
-    let  productChunk = getProductChunk(shuffleArray(products), 4);
+    let  productChunk = getProductChunk((products), 4);
     Category.find((err, result)=> {
       res.render('product/product-list', {
         products: productChunk,

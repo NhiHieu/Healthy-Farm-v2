@@ -14,15 +14,9 @@ const getProfile = (req, res, next)=> {
     if (err) {
       return res.write('error');
     }
-    if (orders.length>0) {
-      orders.forEach(order=> {
-        let cart = new Cart(order.cart);
-        order.items = cart.toArray();
-      })
-    }
     res.render('user/profile', {
       user: req.user,
-      orders: orders
+      orders: orders.reverse(),
     });
   })
 

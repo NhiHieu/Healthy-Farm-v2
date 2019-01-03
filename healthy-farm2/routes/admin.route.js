@@ -17,4 +17,12 @@ router.patch('/products/:productId', adminController.editProduct);
 
 router.delete('/products/:productId', adminController.deleteProduct);
 
+router.get('/products/new', (req, res, next)=> {
+
+  res.render('admin/new-product');
+})
+
+router.get('/users', adminController.getUsers);
+
+router.get('/orders', adminController.getOrders);
 module.exports = router;

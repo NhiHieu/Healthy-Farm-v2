@@ -1,6 +1,8 @@
 const Role = require('../models/role.model');
 const Product = require('../models/product.model');
 const Category = require('../models/category.model');
+const User = require('../models/user.model');
+const Order = require('../models/order.model');
 
 const isAuthAdmin = (req, res, next) => {
   const id = req.user.role;
@@ -93,7 +95,22 @@ const deleteProduct = (req, res, next) => {
     })
 }
 /* manage product */
+// user
+const getUsers = (req, res, next) => {
+  User.find({}, (err, users)=> {
+    res.render('admin/users', {
+      users
+    })
+  })
+}
 
+const getOrders = (req, res, next)=> {
+  Order.find({}).populate('user').exec((err, orders)=> {
+    res.render('admin/orders', {
+      orders
+    })
+  })
+}
 module.exports = {
   // authentication admin
   isAuthAdmin,
@@ -101,6 +118,9 @@ module.exports = {
   getProducts,
   postProduct,
   editProduct,
-  deleteProduct
+  deleteProduct,
   // user
+  getUsers,
+  //order
+  getOrders
 }

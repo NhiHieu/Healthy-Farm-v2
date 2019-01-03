@@ -247,6 +247,34 @@
       <!-- Section products -->
     <% } %>
     </div>
+  
+
+<!--Modal: modalPush-->
+<div class="modal fade" id="modalPush" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-warning" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">You must be log in to continue</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <p class="pt-1">Already have an account? <a href="" id='login-link1' class="blue-text">Log In</a></p>
+        <p class="pt-1">Not a memeber? <a href="" id='signup-link1' class="blue-text">Sign up</a></p>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a class="btn btn-warning waves-effect" data-dismiss="modal">Close</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalPush-->
 </main>
 
 <footer>
@@ -260,8 +288,23 @@ let user = '<%-JSON.stringify(user)%>';
   $('#checkout-link').click((event)=> {
     if (!user) {
       event.preventDefault();
-      toastr.warning("You must log in before checkout", "Warning")
+      $('#modalPush').modal('show');
+      //toastr.warning("You must log in before checkout", "Warning")
     }
+  })
+  $('#signup-link1').click((event)=> {
+    event.preventDefault();
+    $('#modalLoginForm').modal('hide');
+    $('#modalPush').modal('hide');
+    $('#modalRegisterForm').modal('show');
+
+  })
+  $('#login-link1').click((event)=> {
+    event.preventDefault();
+    $('#modalLoginForm').modal('show');
+    $('#modalPush').modal('hide');
+    $('#modalRegisterForm').modal('hide');
+
   })
 </script>
 <script src='/javascripts/cart/addToCart.js'></script>

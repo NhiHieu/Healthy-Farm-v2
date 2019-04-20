@@ -1,6 +1,6 @@
 # healthy-farm
 
-## Demo: [healthy-farm.tk](healthy-farm.tk)
+## Demo: [www.healthy-farm.tk](healthy-farm.tk)
 ### How can you run my project?
 
 1. git clone

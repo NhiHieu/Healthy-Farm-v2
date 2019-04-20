@@ -1,7 +1,5 @@
 # healthy-farm
 
-http://github.com - automatic!
-[GitHub](http://github.com)
 ## Demo: [www.healthy-farm.tk](http://www.healthy-farm.tk)
 ### How can you run my project?
 
